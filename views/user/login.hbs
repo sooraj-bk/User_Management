@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="/styles/userlogin.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="login-container">
+    <h2>Welcome Back 👋</h2>
+    <p class="subtitle">Login to continue</p>
+
+    <form method="post" action="/user/login" id="loginForm">
+        <label for="email">Username or Email</label>
+        <input id="email" name="email" type="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+            <input id="password" name="password" type="password" placeholder="Enter your password" required>
+            <button type="button" id="togglePassword">👁️</button>
+        </div>
+
+        <input class="submit-btn" type="submit" value="Login">
+
+        <!-- Hidden message from server -->
+        <input type="hidden" id="serverMessage" value="{{message}}">
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const serverMessage = document.getElementById('serverMessage')?.value;
+        const togglePasswordBtn = document.getElementById('togglePassword');
+
+    // Show message if exists
+if (serverMessage && serverMessage.trim() !== "") {
+    const isSuccess = serverMessage.toLowerCase().includes('success');
+
+    Swal.fire({
+        icon: isSuccess ? 'success' : 'info',
+        title: isSuccess ? '✔️ Success!' : 'Message',
+        text: serverMessage,
+        confirmButtonColor: isSuccess ? '#28a745' : '#0072ff', // green for success, blue otherwise
+        timer: 3000
+    });
+}
+
+
+        // Password visibility toggle
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePasswordBtn.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+
+        // Form validation
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!email || !password) {
+                return Swal.fire({
+                    icon: 'error',
+                    title: 'Missing Fields',
+                    text: 'Please fill in both email and password.',
+                    confirmButtonColor: '#0072ff'
+                });
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Email',
+                    text: 'Please enter a valid email address.',
+                    confirmButtonColor: '#0072ff'
+                });
+            }
+
+            if (password.length < 6) {
+                return Swal.fire({
+                    icon: 'error',
+                    title: 'Weak Password',
+                    text: 'Password must be at least 6 characters long.',
+                    confirmButtonColor: '#0072ff'
+                });
+            }
+
+            form.submit();
+        });
+    });
+</script>

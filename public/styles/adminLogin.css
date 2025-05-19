@@ -1,0 +1,125 @@
+/* Reset base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+form input[type="email"],
+form input[type="password"],
+form input[type="text"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.4rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+form input:focus {
+    background-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 0 2px #ffb347;
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+#togglePassword:hover {
+    color: #ffb347;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    background: linear-gradient(to right, #ff6a00, #ee0979);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, opacity 0.3s;
+}
+
+button[type="submit"]:hover {
+    transform: scale(1.03);
+    opacity: 0.95;
+}
+
+button[type="submit"]:disabled {
+    background: #999;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 2rem;
+    }
+
+    form input,
+    button[type="submit"] {
+        font-size: 0.95rem;
+    }
+}
